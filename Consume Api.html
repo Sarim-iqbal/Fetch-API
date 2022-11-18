@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nasa API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <script>
+
+        function LoadClick(){
+            fetch("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY&quot")
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(data){
+                for(var item of data.photos){
+                    var tr = document.createElement("tr");
+                    var tdId = document.createElement("td");
+                    var tdCamera = document.createElement("td");
+                    var tdPhoto = document.createElement("td");
+                    var tdRover = document.createElement("td");
+
+
+                    tdId.innerHTML  = item.id;
+                    tdCamera.innerHTML = item.camera.full_name;
+                   
+                    var img = document.createElement("img");
+                    img.src = item.img_src;
+                    img.width="100";
+                    img.height="100";
+
+                    tdPhoto.appendChild(img);
+                    tdRover.innerHTML = item.rover.name;
+
+                    tr.appendChild(tdId);
+                    tr.appendChild(tdCamera);
+                    tr.appendChild(tdPhoto);
+                    tr.appendChild(tdRover);
+
+                    document.querySelector("tbody").appendChild(tr);
+
+                }
+            })
+        }
+    </script>
+</head>
+<style>
+    body{
+        background-color: rgba(203, 250, 250, 0.253);
+    }
+</style>
+<body class="container-fluid">
+  <h2> <button onclick="LoadClick()" class="btn btn-primary">Load</button> Mars Rover Photos  </h2>
+  <table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Photo Id</th> 
+            <th>Camera Name</th>
+            <th>Preview</th>
+            <th>Rover Name</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+  
+</body>
+</html>
+
+                         
